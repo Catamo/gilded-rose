@@ -15,6 +15,9 @@ class Item {
     if (this.quality - number >= 0) {
       this.quality -= number;
     }
+    else {
+      this.quality = 0;
+    }
   }
 
   decreaseSellInBy(number) {
@@ -74,6 +77,18 @@ class Shop {
     return item
   }
 
+  handleConjured = function (item) {
+    item.decreaseSellInBy(1);
+
+    item.decreaseQualityBy(2);
+
+    if (item.sellIn < 0) {
+      item.decreaseQualityBy(2);
+    }
+
+    return item
+  }
+
   updateItem(item) {
     switch (item.name) {
       case 'Aged Brie':
@@ -82,6 +97,8 @@ class Shop {
         return this.handleBackstagePass(item);
       case 'Sulfuras, Hand of Ragnaros':
         return this.handleSulfuras(item);
+      case 'Conjured Mana Cake':
+        return this.handleConjured(item);
       default:
         return this.handleDefault(item)
     }
