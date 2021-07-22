@@ -28,8 +28,10 @@ describe("Gilded Rose", function () {
 
   it("should increase Quality value of 'Aged Brie' as it gets older", function () {
     const gildedRose = new Shop([new Item("Aged Brie", 1, 3)]);
+    gildedRose.updateQuality();
+    gildedRose.updateQuality();
     const updatedItems = gildedRose.updateQuality();
-    expect(updatedItems[0].quality).toBe(4);
+    expect(updatedItems[0].quality).toBe(8);
   })
 
   it("should never have an item with a Quality value over 50", function () {
