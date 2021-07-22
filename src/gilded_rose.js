@@ -27,7 +27,7 @@ class Shop {
     this.items = items;
   }
 
-  handleAgedBrie = function(item) {
+  handleAgedBrie = function (item) {
     item.decreaseSellInBy(1);
 
     item.increaseQualityBy(1);
@@ -38,15 +38,15 @@ class Shop {
 
     return item
   }
-  
-  handleBackstagePass = function(item) {
+
+  handleBackstagePass = function (item) {
     item.decreaseSellInBy(1);
 
     item.increaseQualityBy(1);
 
     if (item.sellIn < 11) {
       item.increaseQualityBy(1);
-    } 
+    }
     if (item.sellIn < 6) {
       item.increaseQualityBy(1);
     }
@@ -58,11 +58,11 @@ class Shop {
     return item
   }
 
-  handleSulfuras = function(item) {
+  handleSulfuras = function (item) {
     return item
   }
 
-  handleDefault = function(item) {
+  handleDefault = function (item) {
     item.decreaseSellInBy(1);
 
     item.decreaseQualityBy(1);
@@ -74,19 +74,22 @@ class Shop {
     return item
   }
 
+  updateItem(item) {
+    switch (item.name) {
+      case 'Aged Brie':
+        return this.handleAgedBrie(item);
+      case 'Backstage passes to a TAFKAL80ETC concert':
+        return this.handleBackstagePass(item);
+      case 'Sulfuras, Hand of Ragnaros':
+        return this.handleSulfuras(item);
+      default:
+        return this.handleDefault(item)
+    }
+  }
+
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].name == 'Aged Brie') {
-        this.items[i] = this.handleAgedBrie(this.items[i])
-      }
-      else if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-        this.items[i] = this.handleBackstagePass(this.items[i])
-      }
-      else {
-        if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-          this.items[i] = this.handleDefault(this.items[i])
-        }
-      }
+      this.items[i] = this.updateItem(this.items[i])
     }
 
     return this.items;
